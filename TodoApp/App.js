@@ -47,6 +47,12 @@ function App() {
     setTodos(nextTodos);
   };
 
+  // List Item Click 시 해당 Item 삭제
+  const onRemove = id => {
+    const nextTodos = todos.filter(todo => todo.id !== id);
+    setTodos(nextTodos);
+  };
+
   return (
     <SafeAreaView edges={['bottom']} style={styles.block}>
       <KeyboardAvoidingView
@@ -59,7 +65,7 @@ function App() {
         {todos.length === 0 ? (
           <Empty />
         ) : (
-          <TodoList todos={todos} onToggle={onToggle} />
+          <TodoList todos={todos} onToggle={onToggle} onRemove={onRemove} />
         )}
         <AddTodo onInsert={onInsert} />
       </KeyboardAvoidingView>

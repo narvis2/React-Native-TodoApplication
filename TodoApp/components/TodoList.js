@@ -7,7 +7,7 @@ import TodoItem from './TodoItem';
  * renderItem = Android 로 치면 Adapter itemView
  * keyExtractor = 고유값, 고유값은 문자열 타입이어야 함
  */
-function TodoList({todos, onToggle}) {
+function TodoList({todos, onToggle, onRemove}) {
   return (
     <FlatList
       ItemSeparatorComponent={() => <View style={styles.separator} />}
@@ -19,6 +19,7 @@ function TodoList({todos, onToggle}) {
           text={item.text}
           done={item.done}
           onToggle={onToggle}
+          onRemove={onRemove}
         />
       )}
       keyExtractor={item => item.id.toString()}
