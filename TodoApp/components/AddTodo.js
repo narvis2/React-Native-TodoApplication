@@ -10,13 +10,14 @@ import {
   Keyboard,
 } from 'react-native';
 
-function AddTodo() {
+function AddTodo({onInsert}) {
   const [text, setText] = useState('');
 
   /**
    * InputText 의 값을 빈칸으로 만들어주고 keyboard GONE 처리
    */
   const onClick = () => {
+    onInsert(text);
     setText('');
     Keyboard.dismiss();
   };
