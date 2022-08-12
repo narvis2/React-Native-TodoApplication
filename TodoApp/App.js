@@ -1,4 +1,8 @@
-import React, {useState} from 'react';
+/**
+ * useEffect : 컴포넌트에서 특정 상태가 바뀔 때마다 원하는 코드를 실행할 수 있음.
+ * 또한, 컴포넌트가 마운트(가장 처음 화면에 나타날 경우)되거나 언마운트(화면에서 컴포넌트가 사라질 경우)될 때 원하는 코드를 실행할 수 있음.
+ */
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,13 +13,25 @@ import DateHead from './components/DateHead';
 import AddTodo from './components/AddTodo';
 import Empty from './components/Empty';
 import TodoList from './components/TodoList';
+import todoStorage from './storages/todosStorage';
 
 function App() {
   const [todos, setTodos] = useState([
     {id: 1, text: '작업환경 설정', done: true},
     {id: 2, text: '리엑트 네이티브 기초 공부', done: false},
-    {id: 3, text: 'Todo리스트 만들어보기', done: false},
   ]);
+  // 가져오기, App이 마운트(가장 처음 화면에 나타날 경우) 데이터를 불러옴
+  useEffect(() => {
+    // async 함수를 따로 선언하지 않고 Promise 를 그대로 사용
+    todoStorage.get().then(setTodos).catch(console.error);
+  }, []);
+
+  // 저장
+  useEffect(() => {
+    // todos가 바뀔때 마다 실행되는 Callback 함수, 처음 렌더링될 때에도 호출됨
+    // async 함수를 따로 선언하지 않고 Promise 를 그대로 사용
+    todoStorage.set(todos).then().catch(console.error);
+  }, [todos]);
 
   /**
    * 텍스트 작성 후 Add 버튼 누르면 List에 해당 Text를 추가해줌
